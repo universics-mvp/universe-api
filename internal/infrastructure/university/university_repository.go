@@ -7,17 +7,17 @@ import (
 	"net/http"
 )
 
-type UniversityInfrastructure struct {
+type UniversityRepository struct {
 	env config.Env
 }
 
-func NewUniversityInfrastructure (env config.Env) UniversityInfrastructure {
-	return UniversityInfrastructure{
+func NewUniversityRepository (env config.Env) UniversityRepository {
+	return UniversityRepository{
 		env: env,
 	}
 }
 
-func (u UniversityInfrastructure) GetUsers () ([]*StudentDTO, error) {
+func (u UniversityRepository) GetUsers () ([]*StudentDTO, error) {
 	request, err := http.NewRequest(http.MethodGet, u.env.ApiURL, nil)
 	if err != nil {
 		return nil, err 
