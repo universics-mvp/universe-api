@@ -1,0 +1,112 @@
+@startuml univerese usecase 
+
+:пользователь: as user
+:студент: as student
+:администратор: as admin
+:куратор: as mentor
+
+user <|-- admin
+user <|-- mentor
+
+package Задания {
+    usecase "Просмотр заданий" as view_tasks
+    usecase "Редактирование заданий" as edit_tasks
+    usecase "Создание заданий" as create_tasks
+    usecase "Удаление заданий" as delete_tasks
+
+    student --> view_tasks
+    
+    mentor --> view_tasks
+    mentor --> edit_tasks
+    mentor --> create_tasks
+    mentor --> delete_tasks
+
+    admin --> view_tasks
+    admin --> edit_tasks
+    admin --> create_tasks
+    admin --> delete_tasks
+
+}
+
+package Решения {
+    usecase "Отправка решения" as send_solution
+    usecase "Просмотр своего решения" as view_solution
+    usecase "Просмотр решения студентов" as view_students_solutions
+    usecase "Оценка решения" as mark_solution
+    usecase "Редактирование решения" as edit_solution
+
+    student --> send_solution
+    student --> view_solution
+    student --> edit_solution
+
+    mentor --> view_students_solutions
+    mentor --> mark_solution
+
+    admin --> view_students_solutions
+    admin --> mark_solution
+}
+
+package Аккаунт {
+    usecase "Регистрация" as register
+    usecase "Авторизация" as login
+    usecase "Редактирование профиля" as edit_profile
+    usecase "Удаление аккаунта" as delete_account
+
+    usecase "Подтверждение аккаунта" as confirm_account
+
+    user --> register
+    user --> login
+    user --> edit_profile
+    user --> delete_account
+
+    admin -> edit_profile
+    admin -> delete_account
+    admin -> confirm_account
+}
+
+package Вопросы_по_университету {
+    usecase "Задать вопрос" as ask_question
+    
+    user --> ask_question
+}
+
+package Группа {
+    usecase "Просмотр группы" as view_group
+    usecase "Просмотр успеваемости" as view_performance
+    usecase "Просмотр расписания" as view_schedule
+    usecase "Редактирование группы" as edit_group
+    usecase "Создание группы" as create_group
+    usecase "Удаление группы" as delete_group
+    usecase "Просмотр студентов в группе" as view_students
+    usecase "Добавление студентов в группу" as add_students
+    usecase "Удаление студентов из группы" as delete_students
+
+    student --> view_group
+    student --> view_performance
+    student --> view_schedule
+
+    mentor --> view_group
+    mentor --> view_performance
+    mentor --> view_schedule
+    mentor --> edit_group
+    mentor --> create_group
+    mentor --> delete_group
+    mentor --> view_students
+    mentor --> add_students
+    mentor --> delete_students
+
+
+    admin --> view_group
+    admin --> view_performance
+    admin --> view_schedule
+    admin --> edit_group
+    admin --> create_group
+    admin --> delete_group
+    admin --> view_students
+    admin --> add_students
+    admin --> delete_students
+
+}
+
+
+

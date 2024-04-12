@@ -1,0 +1,22 @@
+@startuml
+
+cloud "server" {
+
+     node backend {
+        component universe_api
+    }
+
+    node infrastructure {
+        database universe_db
+    }
+    backend -- universe_db
+}
+
+
+cloud "yandex GPT" {
+    node yandex_gpt
+}
+
+backend -- yandex_gpt
+
+@enduml
