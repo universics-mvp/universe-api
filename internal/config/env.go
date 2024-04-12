@@ -19,11 +19,7 @@ type Env struct {
 	DBPass string `mapstructure:"DB_PASS"`
 	DBName string `mapstructure:"DB_NAME"`
 
-	BrokerHost string `mapstructure:"BROKER_HOST"`
-	BrokerPort string `mapstructure:"BROKER_PORT"`
-	BrokerUser string `mapstructure:"BROKER_USER"`
-	BrokerPass string `mapstructure:"BROKER_PASS"`
-	KafkaGroup string `mapstructure:"KAFKA_GROUP"`
+	ApiURL string `mapstructure:"API_URL"`
 }
 
 func NewEnv() Env {
