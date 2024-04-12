@@ -1,0 +1,7 @@
+.DS_Store
+bin/
+/.idea
+.idea
+.env
+.vscode
+**.kafka
