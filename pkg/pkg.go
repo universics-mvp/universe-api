@@ -7,4 +7,5 @@ import (
 var Module = fx.Options(
 	fx.Provide(GetLogger),
 	fx.Provide(NewRequestHandler),
+	fx.Provide(NewMongoDatabase),
 )
