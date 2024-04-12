@@ -28,7 +28,9 @@ type Env struct {
 
 func NewEnv() Env {
 	env := Env{}
+
 	viper.SetConfigFile(".env")
+
 	_, err := os.Stat(".env")
 	useEnvFile := !os.IsNotExist(err)
 
@@ -44,6 +46,7 @@ func NewEnv() Env {
 	}
 
 	viper.AutomaticEnv()
+
 	err = viper.Unmarshal(&env)
 	if err != nil {
 		log.Fatal("Environment can't be loaded: ", err)

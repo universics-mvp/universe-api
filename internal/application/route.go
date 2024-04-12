@@ -1,6 +1,8 @@
 package route
 
 import (
+	"main/internal/application/question_controller"
+
 	"go.uber.org/fx"
 )
 
@@ -17,8 +19,10 @@ type Route interface {
 
 // here should return routers
 func NewRoutes(
+	questionRoutes question_controller.QuestionRoutes,
 ) Routes {
 	return Routes{
+	questionRoutes,
 	}
 }
 

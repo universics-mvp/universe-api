@@ -14,10 +14,17 @@ import (
 func Run() any {
 	return func(
 		route route.Routes,
+		handler pkg.RequestHandler,
 		env config.Env,
 		logger pkg.Logger,
 	) {
 		route.Setup()
+		
+		err := handler.Gin.Run(":" + env.Port)
+		if err != nil {
+			logger.Error(err)
+			return 
+		}
 	}
 }
 
