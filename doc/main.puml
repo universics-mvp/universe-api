@@ -46,23 +46,6 @@ package Решения {
     admin --> mark_solution
 }
 
-package Аккаунт {
-    usecase "Регистрация" as register
-    usecase "Авторизация" as login
-    usecase "Редактирование профиля" as edit_profile
-    usecase "Удаление аккаунта" as delete_account
-
-    usecase "Подтверждение аккаунта" as confirm_account
-
-    user --> register
-    user --> login
-    user --> edit_profile
-    user --> delete_account
-
-    admin -> edit_profile
-    admin -> delete_account
-    admin -> confirm_account
-}
 
 package Вопросы_по_университету {
     usecase "Задать вопрос" as ask_question
