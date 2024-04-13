@@ -5,6 +5,7 @@ import (
 	route "main/internal/application"
 	chatbot "main/internal/application/chat_bot"
 	"main/internal/config"
+	daily_reporter "main/internal/domain/dailyReporter"
 	"main/pkg"
 
 	"go.uber.org/fx"
@@ -16,11 +17,13 @@ func Run() any {
 		route route.Routes,
 		handler pkg.RequestHandler,
 		tgHandler chatbot.TgHandler,
+		dailyReporter daily_reporter.DailyReportService,
 		env config.Env,
 		logger pkg.Logger,
 	) {
 		route.Setup()
 		tgHandler.Run()
+		dailyReporter.Run()
 		err := handler.Gin.Run(":" + env.Port)
 		if err != nil {
 			logger.Error(err)

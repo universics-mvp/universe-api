@@ -95,6 +95,7 @@ func mapShema(schema GroupSchema) group.Group {
 		ID:        &schema.ID,
 		ChatID:    schema.ChatID,
 		CuratorID: schema.CuratorID,
+		Title:     schema.Title,
 	}
 }
 
@@ -103,5 +104,6 @@ func mapToSchema(group group.Group) GroupSchema {
 		ID:        *group.ID,
 		ChatID:    group.ChatID,
 		CuratorID: group.CuratorID,
+		Title:     group.Title,
 	}
 }

@@ -50,7 +50,7 @@ func (repo MessageRepository) update(sess *message.Message) (*message.Message, e
 	return sess, nil
 }
 
-func (c MessageRepository) GetMessagesForChat(chatId int64, since int) ([]message.Message, error) {
+func (c MessageRepository) GetMessagesForChat(chatId int64, since int64) ([]message.Message, error) {
 	cur, err := c.collection.Find(context.Background(), bson.M{"chat_id": chatId, "date": bson.M{"$gte": since}})
 	if err != nil {
 		return nil, err
@@ -72,23 +72,26 @@ func (c MessageRepository) GetMessagesForChat(chatId int64, since int) ([]messag
 
 func mapShema(schema MessageSchema) message.Message {
 	return message.Message{
-		ID:        &schema.ID,
-		ChatId:    schema.ChatID,
-		MessageID: schema.MessageID,
-		Text:      schema.Text,
-		Date:      schema.Date,
-		UserID:    schema.UserID,
+		ID:           &schema.ID,
+		ChatId:       schema.ChatID,
+		MessageID:    schema.MessageID,
+		Text:         schema.Text,
+		SessionId:    schema.SessionID,
+		UserFullName: schema.UserFullName,
+		Date:         schema.Date,
+		UserID:       schema.UserID,
 	}
 }
 
 func mapToSchema(msg message.Message) MessageSchema {
 	return MessageSchema{
-		ID:        *msg.ID,
-		ChatID:    msg.ChatId,
-		Text:      msg.Text,
-		SessionID: msg.SessionId,
-		MessageID: msg.MessageID,
-		UserID:    msg.UserID,
-		Date:      msg.Date,
+		ID:           *msg.ID,
+		ChatID:       msg.ChatId,
+		Text:         msg.Text,
+		UserFullName: msg.UserFullName,
+		SessionID:    msg.SessionId,
+		MessageID:    msg.MessageID,
+		UserID:       msg.UserID,
+		Date:         msg.Date,
 	}
 }

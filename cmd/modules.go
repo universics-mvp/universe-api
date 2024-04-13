@@ -9,6 +9,7 @@ import (
 	"main/internal/config"
 	challenge_answer_domain "main/internal/domain/challengeAnswer"
 	challenge_domain "main/internal/domain/dailyChallenge"
+	daily_reporter "main/internal/domain/dailyReporter"
 	"main/internal/domain/messaging"
 	challenge_answer_infrastructure "main/internal/infrastructure/challengeAnswer"
 	challenge_infrastructure "main/internal/infrastructure/dailyChallenge"
@@ -44,4 +45,5 @@ var CommonModules = fx.Options(
 	chatbot.Module,
 	message_infrastructure.Module,
 	group_infrastructure.Module,
+	daily_reporter.Module,
 )
