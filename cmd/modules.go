@@ -2,6 +2,7 @@ package cmd
 
 import (
 	route "main/internal/application"
+	"main/internal/application/categorization"
 	challenge_answer_application "main/internal/application/challengeAnswer"
 	chatbot "main/internal/application/chat_bot"
 	challenge_application "main/internal/application/dailyChallenge"
@@ -40,4 +41,5 @@ var CommonModules = fx.Options(
 	session_infrastructure.Module,
 	tgbot.Module,
 	chatbot.Module,
+	categorization.Module,
 )
