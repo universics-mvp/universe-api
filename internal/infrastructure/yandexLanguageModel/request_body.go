@@ -1,6 +1,6 @@
 package yandex_language_model
 
-type YandexRequestBody struct {
-	modelUri string `json:"modelUri"`
-	
+type RequestBody struct {
+	modelUri          string            `json:"modelUri"`
+	completionOptions CompletionOptions `json:"completionOptions"`
 }
