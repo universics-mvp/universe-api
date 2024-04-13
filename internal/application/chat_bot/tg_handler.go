@@ -30,7 +30,7 @@ func (handler TgHandler) Run() {
 
 func (handler TgHandler) handleMessage(msg telebot.Message) {
 	handler.logger.Debugf("%s: %s", msg.Sender.Username, msg.Text)
-	if msg.Chat.Type == telebot.ChatGroup {
+	if msg.Chat.Type == telebot.ChatSuperGroup {
 		err := handler.chatService.HandleChatMessage(msg)
 		if err != nil {
 			handler.logger.Error(err)
