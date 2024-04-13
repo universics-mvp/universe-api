@@ -1,19 +1,20 @@
 package question_controller
 
 import (
-	language_model_domain "main/internal/domain/languageModel"
 	"net/http"
+
+	"main/internal/application/categorization"
 
 	"github.com/gin-gonic/gin"
 )
 
 type QuestionController struct {
-	languageModel language_model_domain.LanguageModel
+	categorizer categorization.Categorizer
 }
 
-func NewQuestionController(languageModel language_model_domain.LanguageModel) QuestionController {
+func NewQuestionController(categorizer categorization.Categorizer) QuestionController {
 	return QuestionController{
-		languageModel: languageModel,
+		categorizer: categorizer,
 	}
 }
 
@@ -21,7 +22,6 @@ func (controller QuestionController) AskQuestion(c *gin.Context) {
 	var dto *QuestionDTO
 
 	err := c.BindJSON(&dto)
-
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"error": err.Error(),
@@ -29,8 +29,7 @@ func (controller QuestionController) AskQuestion(c *gin.Context) {
 	}
 
 	msg := dto.UserMessage
-	answer, err := controller.languageModel.GetAnswer(msg, standardPromt, standardTemperature)
-
+	answer, err := controller.categorizer.Categorize(msg, standardCategoies)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"error": err.Error(),

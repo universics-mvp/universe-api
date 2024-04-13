@@ -2,6 +2,7 @@ package cmd
 
 import (
 	route "main/internal/application"
+	"main/internal/application/categorization"
 	challenge_answer_application "main/internal/application/challengeAnswer"
 	challenge_application "main/internal/application/dailyChallenge"
 	question_controller "main/internal/application/question"
@@ -31,4 +32,6 @@ var CommonModules = fx.Options(
 	challenge_answer_domain.Module,
 	challenge_answer_infrastructure.Module,
 	challenge_answer_application.Module,
+
+	categorization.Module,
 )

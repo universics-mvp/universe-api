@@ -3,6 +3,7 @@ package yandex_language_model
 import (
 	"encoding/json"
 	"fmt"
+
 	"main/internal/config"
 	language_model_domain "main/internal/domain/languageModel"
 
@@ -28,7 +29,6 @@ func (l LanguageModel) getIamToken() (string, error) {
 		SetHeader("Content-Type", "application/json").
 		SetBody(fmt.Sprintf(`{"yandexPassportOauthToken": "%s"}`, l.oauthToken)).
 		Post("https://iam.api.cloud.yandex.net/iam/v1/tokens")
-
 	if err != nil {
 		return "error", err
 	}
@@ -61,7 +61,6 @@ func (l LanguageModel) GetAnswer(msg string, promt string, temperture float32) (
 		SetHeader("Authorization", "Bearer "+iamToken).
 		SetBody(request).
 		Post("https://llm.api.cloud.yandex.net/foundationModels/v1/completion")
-
 	if err != nil {
 		return "error", err
 	}
