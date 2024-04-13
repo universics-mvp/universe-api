@@ -20,6 +20,9 @@ type Env struct {
 	DBName string `mapstructure:"DB_NAME"`
 
 	ApiURL string `mapstructure:"API_URL"`
+
+	YaGptOauthToken  string `mapstructure:"YA_OAUTH"`
+	YaGptDirectoryID string `mapstructure:"YA_DIR_ID"`
 }
 
 func NewEnv() Env {

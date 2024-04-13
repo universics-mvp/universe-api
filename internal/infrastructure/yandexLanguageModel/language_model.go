@@ -3,6 +3,8 @@ package yandex_language_model
 import (
 	"encoding/json"
 	"fmt"
+	"main/internal/config"
+	language_model_domain "main/internal/domain/languageModel"
 
 	"gopkg.in/resty.v1"
 )
@@ -12,14 +14,14 @@ type LanguageModel struct {
 	directoryId string
 }
 
-func NewLanguageModel(oauthToken string, directoryId string) LanguageModel {
+func NewLanguageModel(env config.Env) language_model_domain.LanguageModel {
 	return LanguageModel{
-		oauthToken:  oauthToken,
-		directoryId: directoryId,
+		oauthToken:  env.YaGptOauthToken,
+		directoryId: env.YaGptDirectoryID,
 	}
 }
 
-func (l *LanguageModel) getIamToken() (string, error) {
+func (l LanguageModel) getIamToken() (string, error) {
 	client := resty.New()
 
 	resp, err := client.R().
@@ -34,7 +36,7 @@ func (l *LanguageModel) getIamToken() (string, error) {
 	return resp.String(), nil
 }
 
-func (l *LanguageModel) GetAnswer(msg string, promt string, temperture float32) (string, error) {
+func (l LanguageModel) GetAnswer(msg string, promt string, temperture float32) (string, error) {
 	client := resty.New()
 
 	iamToken, err := l.getIamToken()
