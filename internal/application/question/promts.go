@@ -7,7 +7,7 @@ const (
 	standardTemperature = 0.3
 )
 
-var standardCategoies = []string{
+var StandardCategoies = []string{
 	"Адаптация",
 	"Учеба",
 	"Расписание",

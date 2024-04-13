@@ -29,7 +29,7 @@ func (controller QuestionController) AskQuestion(c *gin.Context) {
 	}
 
 	msg := dto.UserMessage
-	answer, err := controller.categorizer.Categorize(msg, standardCategoies)
+	answer, err := controller.categorizer.Categorize(msg, StandardCategoies)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"error": err.Error(),
