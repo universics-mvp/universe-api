@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-const DAILY = "@daily"
+const DAILY = "18 0 0 * * *"
 
 const BASE_DAILY_REPORT_PROMPT = `Ты - помощник куратора первокурсников в университете, ниже представлена беседа студентов за последний день, проанализируй написанное и составь отчёт о проблемах, на которые куратору стоило бы обратить внимание:`
 
@@ -36,8 +36,7 @@ func NewDailyReportService(logger pkg.Logger, cronRunner pkg.CronRunner, groupRe
 }
 
 func (dr DailyReportService) Run() {
-	dr.sendDailyReports()
-	// dr.cron.AddFunc(DAILY, dr.sendDailyReports)
+	dr.cron.AddFunc(DAILY, dr.sendDailyReports)
 	dr.cron.Run()
 }
 
