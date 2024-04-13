@@ -2,15 +2,16 @@ package pkg
 
 import (
 	"fmt"
-	"main/internal/config"
 	"os"
+
+	"main/internal/config"
 
 	"go.uber.org/fx/fxevent"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
 
-// Logger structure
+// Logger structure.
 type Logger struct {
 	*zap.SugaredLogger
 }
@@ -28,7 +29,7 @@ var (
 	zapLogger    *zap.Logger
 )
 
-// GetLogger get the logger
+// GetLogger get the logger.
 func GetLogger(env config.Env) Logger {
 	if globalLogger == nil {
 		logger := newLogger(env)
@@ -37,7 +38,7 @@ func GetLogger(env config.Env) Logger {
 	return *globalLogger
 }
 
-// GetGinLogger get the gin logger
+// GetGinLogger get the gin logger.
 func (l Logger) GetGinLogger() GinLogger {
 	logger := zapLogger.WithOptions(
 		zap.WithCaller(false),
@@ -47,7 +48,7 @@ func (l Logger) GetGinLogger() GinLogger {
 	}
 }
 
-// GetFxLogger gets logger for go-fx
+// GetFxLogger gets logger for go-fx.
 func (l *Logger) GetFxLogger() fxevent.Logger {
 	logger := zapLogger.WithOptions(
 		zap.WithCaller(false),
@@ -55,7 +56,7 @@ func (l *Logger) GetFxLogger() fxevent.Logger {
 	return &FxLogger{Logger: newSugaredLogger(logger)}
 }
 
-// LogEvent log event for fx logger
+// LogEvent log event for fx logger.
 func (l *FxLogger) LogEvent(event fxevent.Event) {
 	switch e := event.(type) {
 	case *fxevent.OnStartExecuting:
@@ -128,9 +129,8 @@ func newSugaredLogger(logger *zap.Logger) *Logger {
 	}
 }
 
-// newLogger sets up logger
+// newLogger sets up logger.
 func newLogger(env config.Env) Logger {
-
 	config := zap.NewDevelopmentConfig()
 	logOutput := os.Getenv("LOG_OUTPUT")
 
@@ -167,7 +167,7 @@ func newLogger(env config.Env) Logger {
 	return *logger
 }
 
-// Write interface implementation for gin-framework
+// Write interface implementation for gin-framework.
 func (l GinLogger) Write(p []byte) (n int, err error) {
 	l.Info(string(p))
 	return len(p), nil
