@@ -22,6 +22,10 @@ func NewMongoDatabase(logger Logger, env config.Env) MongoDatabase {
 	ctx := context.Background()
 
 	cl, err := mongo.Connect(ctx, &options.ClientOptions{
+		Auth: &options.Credential{
+			Username: env.DBUser,
+			Password: env.DBPass,
+		},
 		Hosts: []string{
 			fmt.Sprint(env.DBHost, ":", env.DBPort),
 		},
