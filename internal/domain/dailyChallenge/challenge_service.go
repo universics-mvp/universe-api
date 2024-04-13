@@ -2,8 +2,6 @@ package challenge_domain
 
 import (
 	"main/pkg"
-
-	"go.mongodb.org/mongo-driver/bson"
 )
 
 type ChallengeService struct {
@@ -18,7 +16,7 @@ func NewChallengeService(repositoty ChallengeRepository, logger pkg.Logger) Chal
 	}
 }
 
-func (c *ChallengeService) GetChallenges() ([]bson.M, error) {
+func (c *ChallengeService) GetChallenges() ([]DailyChallenge, error) {
 	result, err := c.repositoty.GetChallenges()
 	if err != nil {
 		return nil, err
