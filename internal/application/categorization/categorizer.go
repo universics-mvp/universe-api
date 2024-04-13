@@ -1,6 +1,7 @@
 package categorization
 
 import (
+	"fmt"
 	language_model_domain "main/internal/domain/languageModel"
 	"strings"
 )
@@ -16,7 +17,9 @@ func NewCategorizer(languageModel language_model_domain.LanguageModel) Categoriz
 }
 
 func (c *Categorizer) Categorize(message string, tokens []string) ([]string, error) {
-	answer, err := c.languageModel.GetAnswer(message, categoriesPromt, categoriesTemperature)
+	joinedString := strings.Join(tokens, ", ")
+	promt := fmt.Sprintf(categoriesPromt, joinedString)
+	answer, err := c.languageModel.GetAnswer(message, promt, categoriesTemperature)
 	if err != nil {
 		return nil, err
 	}
