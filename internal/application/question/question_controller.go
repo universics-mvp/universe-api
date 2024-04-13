@@ -6,16 +6,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type QuestionController struct {
-}
+type QuestionController struct{}
 
 func NewQuestionController() QuestionController {
 	return QuestionController{}
 }
 
-func (controller QuestionController) AskQuestion (c *gin.Context)  {
+func (controller QuestionController) AskQuestion(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
-		"message" : "ok", 
+		"message": "ok",
 	})
 
 	return

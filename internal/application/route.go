@@ -1,6 +1,7 @@
 package route
 
 import (
+	challenge_answer_application "main/internal/application/challengeAnswer"
 	challenge_application "main/internal/application/dailyChallenge"
 	question_controller "main/internal/application/question"
 
@@ -13,19 +14,21 @@ var Module = fx.Options(
 
 type Routes []Route
 
-// Route interface
+// Route interface.
 type Route interface {
 	Setup()
 }
 
-// here should return routers
+// here should return routers.
 func NewRoutes(
 	questionRoutes question_controller.QuestionRoutes,
 	challengeRoutes challenge_application.ChallengeRoutes,
+	challengeAnswerRoutes challenge_answer_application.ChallengeAnswerRoutes,
 ) Routes {
 	return Routes{
 		questionRoutes,
 		challengeRoutes,
+		challengeAnswerRoutes,
 	}
 }
 
