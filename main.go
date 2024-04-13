@@ -1,11 +1,14 @@
 package main
 
-import "main/cmd"
+import (
+	"log"
+
+	"main/cmd"
+)
 
 func main() {
-
 	err := cmd.StartApp()
 	if err != nil {
-		return
+		log.Fatal(err)
 	}
 }

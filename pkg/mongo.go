@@ -2,7 +2,6 @@ package pkg
 
 import (
 	"context"
-	"errors"
 	"fmt"
 
 	"main/internal/config"
@@ -22,13 +21,7 @@ type MongoDatabase struct {
 func NewMongoDatabase(logger Logger, env config.Env) MongoDatabase {
 	ctx := context.Background()
 
-	logger.Info("Connecting to mongodb")
-
 	cl, err := mongo.Connect(ctx, &options.ClientOptions{
-		Auth: &options.Credential{
-			Username: env.DBUser,
-			Password: env.DBPass,
-		},
 		Hosts: []string{
 			fmt.Sprint(env.DBHost, ":", env.DBPort),
 		},
@@ -37,13 +30,9 @@ func NewMongoDatabase(logger Logger, env config.Env) MongoDatabase {
 		logger.Fatal(err)
 	}
 
-	_, err = cl.StartSession()
+	err = cl.Ping(ctx, nil)
 	if err != nil {
 		logger.Fatal(err)
-	}
-
-	if cl == nil {
-		logger.Fatal(errors.New("Couldn't connect to mongodb"))
 	}
 
 	db := cl.Database(env.DBName)

@@ -1,7 +1,8 @@
 package route
 
 import (
-	"main/internal/application/question_controller"
+	challenge_application "main/internal/application/dailyChallenge"
+	question_controller "main/internal/application/question"
 
 	"go.uber.org/fx"
 )
@@ -20,9 +21,11 @@ type Route interface {
 // here should return routers
 func NewRoutes(
 	questionRoutes question_controller.QuestionRoutes,
+	challengeRoutes challenge_application.ChallengeRoutes,
 ) Routes {
 	return Routes{
-	questionRoutes,
+		questionRoutes,
+		challengeRoutes,
 	}
 }
 
