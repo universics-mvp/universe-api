@@ -14,6 +14,9 @@ func (am answerMapper) EntityToSchema(challengeAnswer challenge_answer_domain.Ch
 		ChallengeId: challengeAnswer.ChallengeId,
 		UserId:      challengeAnswer.UserId,
 		Answer:      challengeAnswer.Answer,
+		Mark:        challengeAnswer.Mark,
+		Status:      challengeAnswer.Status,
+		Comment:     challengeAnswer.Comment,
 	}
 }
 
@@ -23,5 +26,8 @@ func (am answerMapper) SchemaToEntity(challengeAnswer answerSchema) challenge_an
 		ChallengeId: challengeAnswer.ChallengeId,
 		UserId:      challengeAnswer.UserId,
 		Answer:      challengeAnswer.Answer,
+		Mark:        challengeAnswer.Mark,
+		Status:      challengeAnswer.Status,
+		Comment:     challengeAnswer.Comment,
 	}
 }

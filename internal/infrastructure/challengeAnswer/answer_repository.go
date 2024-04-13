@@ -63,3 +63,31 @@ func (c ChallengeAnswerMongoRepository) CreateChallengeAnswer(challengeAnswer do
 
 	return &challengeAnswer, nil
 }
+
+func (c ChallengeAnswerMongoRepository) FindChallengeAnswer(id primitive.ObjectID) (*domain.ChallengeAnswer, error) {
+	var schema answerSchema
+
+	err := c.collection.FindOne(context.Background(), bson.M{"_id": id}).Decode(&schema)
+	if err != nil {
+		return nil, err
+	}
+
+	resp := c.mapper.SchemaToEntity(schema)
+
+	return &resp, nil
+}
+
+func (c ChallengeAnswerMongoRepository) UpdateChallengeAnswer(challengeAnswer domain.ChallengeAnswer) (*domain.ChallengeAnswer, error) {
+	schema := c.mapper.EntityToSchema(challengeAnswer)
+
+	_, err := c.collection.ReplaceOne(
+		context.Background(),
+		bson.M{"_id": schema.ID},
+		schema,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return &challengeAnswer, nil
+}

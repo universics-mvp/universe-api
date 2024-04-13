@@ -12,11 +12,14 @@ type ChallengeAnswer struct {
 	Answer      string             `json:"answer"       binding:"required"`
 	Mark        int                `json:"mark"`
 	Status      string             `json:"status"`
+	Comment     string             `json:"comment"`
 }
 
 type ChallengeAnswerRepository interface {
 	GetChallengeAnswers(id primitive.ObjectID) ([]ChallengeAnswer, error)
 	CreateChallengeAnswer(challengeAnswer ChallengeAnswer) (*ChallengeAnswer, error)
+	UpdateChallengeAnswer(challengeAnswer ChallengeAnswer) (*ChallengeAnswer, error)
+	FindChallengeAnswer(id primitive.ObjectID) (*ChallengeAnswer, error)
 }
 
 const (

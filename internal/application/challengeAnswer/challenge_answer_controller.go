@@ -52,3 +52,37 @@ func (controller ChallengeAnswerController) CreateChallenge(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusCreated, createdChallengeAnswer)
 }
+
+func (controller ChallengeAnswerController) UpdateChallengeAnswerStatus(ctx *gin.Context) {
+	id, err := primitive.ObjectIDFromHex(ctx.Param("id"))
+	if err != nil {
+		controller.logger.Error(err)
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+	}
+
+	var dto UpdateAnswerStatusDTO
+	if err := ctx.ShouldBindJSON(&dto); err != nil {
+		controller.logger.Error(err)
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+	}
+
+	updatedChallengeAnswer, err := controller.service.UpdateChallengeAnswerStatus(id, dto.Status, dto.Mark, &dto.Comment)
+	if err != nil {
+		if err.Error() == "invalid mark or status" {
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+			return
+		}
+
+		controller.logger.Error(err)
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+
+		return
+	}
+
+	ctx.JSON(http.StatusOK, updatedChallengeAnswer)
+}
