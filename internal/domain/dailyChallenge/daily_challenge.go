@@ -15,9 +15,9 @@ var Module = fx.Options(
 )
 
 type DailyChallenge struct {
-	ID          primitive.ObjectID `bson:"_id"         json:"id"`
-	Title       string             `bson:"title"       json:"title"`
-	Description string             `bson:"description" json:"description"`
-	CreatorId   string             `bson:"creator_id"  json:"creator_id"`
-	Groups      []string           `bson:"groups"      json:"groups"`
+	ID          primitive.ObjectID `json:"id"`
+	Title       string             `json:"title" binding:"required"`
+	Description string             `json:"description" binding:"required"`
+	CreatorId   string             `json:"creator_id" binding:"required"`
+	Groups      []string           `json:"groups"`
 }

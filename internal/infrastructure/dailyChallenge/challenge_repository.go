@@ -15,7 +15,7 @@ import (
 type ChallengeMongoRepository struct {
 	collection *mongo.Collection
 	logger     pkg.Logger
-	mapper     ChallengeMapper
+	mapper     challengeMapper
 }
 
 func NewChallengeMongoRepository(db pkg.MongoDatabase, logger pkg.Logger) challenge_domain.ChallengeRepository {
@@ -33,7 +33,7 @@ func (c ChallengeMongoRepository) GetChallenges() ([]challenge_domain.DailyChall
 	}
 	defer cur.Close(context.Background())
 
-	var result []ChallengeSchema
+	var result []challengeSchema
 
 	err = cur.All(context.Background(), &result)
 	if err != nil {

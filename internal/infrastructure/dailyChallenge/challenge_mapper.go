@@ -2,14 +2,14 @@ package challenge_infrastructure
 
 import challenge_domain "main/internal/domain/dailyChallenge"
 
-type ChallengeMapper struct{}
+type challengeMapper struct{}
 
-func NewChallengeMapper() ChallengeMapper {
-	return ChallengeMapper{}
+func NewChallengeMapper() challengeMapper {
+	return challengeMapper{}
 }
 
-func (cm ChallengeMapper) EntityToSchema(challenge challenge_domain.DailyChallenge) ChallengeSchema {
-	return ChallengeSchema{
+func (cm challengeMapper) EntityToSchema(challenge challenge_domain.DailyChallenge) challengeSchema {
+	return challengeSchema{
 		ID:          challenge.ID,
 		Title:       challenge.Title,
 		Description: challenge.Description,
@@ -18,7 +18,7 @@ func (cm ChallengeMapper) EntityToSchema(challenge challenge_domain.DailyChallen
 	}
 }
 
-func (cm ChallengeMapper) SchemaToEntity(challenge ChallengeSchema) challenge_domain.DailyChallenge {
+func (cm challengeMapper) SchemaToEntity(challenge challengeSchema) challenge_domain.DailyChallenge {
 	return challenge_domain.DailyChallenge{
 		ID:          challenge.ID,
 		Title:       challenge.Title,
