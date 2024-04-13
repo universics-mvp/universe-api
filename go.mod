@@ -69,4 +69,5 @@ require (
 	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/telebot.v3 v3.2.1 // indirect
+	gopkg.in/resty.v1 v1.12.0
 )
