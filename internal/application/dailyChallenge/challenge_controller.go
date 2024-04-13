@@ -63,3 +63,29 @@ func (controller *ChallengeController) CreateChallenge(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusCreated, result)
 }
+
+type GetVariantsMessage struct {
+	Message string `json:"message"`
+}
+
+func (controller *ChallengeController) GetVariantsForChallenge(ctx *gin.Context) {
+	var dto GetVariantsMessage
+	if err := ctx.ShouldBindJSON(&dto); err != nil {
+		controller.logger.Error(err)
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+		return
+	}
+
+	result, err := controller.challengeService.GetVariantsForChallenge(dto.Message)
+	if err != nil {
+		controller.logger.Error(err)
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": result,
+	})
+}

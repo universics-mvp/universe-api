@@ -2,8 +2,9 @@ package categorization
 
 import (
 	"fmt"
-	language_model_domain "main/internal/domain/languageModel"
 	"strings"
+
+	language_model_domain "main/internal/domain/languageModel"
 )
 
 type Categorizer struct {
@@ -23,6 +24,8 @@ func (c *Categorizer) Categorize(message string, tokens []string) ([]string, err
 	if err != nil {
 		return nil, err
 	}
+
+	tokens = append(tokens, otherCategory)
 
 	foundTokens := make([]string, 0)
 
