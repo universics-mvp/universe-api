@@ -28,8 +28,6 @@ type Env struct {
 func NewEnv() Env {
 	env := Env{}
 
-	viper.SetConfigFile(".env")
-
 	_, err := os.Stat(".env")
 	useEnvFile := !os.IsNotExist(err)
 
@@ -42,13 +40,13 @@ func NewEnv() Env {
 		if err != nil {
 			log.Fatal("Can't read the .env file: ", err)
 		}
-	}
 
-	viper.AutomaticEnv()
-
-	err = viper.Unmarshal(&env)
-	if err != nil {
-		log.Fatal("Environment can't be loaded: ", err)
+		err = viper.Unmarshal(&env)
+		if err != nil {
+			log.Fatal("Environment can't be loaded: ", err)
+		}
+	} else {
+		env.bindEnv()
 	}
 
 	if env.AppEnv != "production" {
@@ -56,6 +54,22 @@ func NewEnv() Env {
 	}
 
 	return env
+}
+
+func (e *Env) bindEnv() {
+	e.ApiURL = os.Getenv("API_URL")
+	e.AppEnv = os.Getenv("APP_ENV")
+	e.Port = os.Getenv("PORT")
+
+	e.DBHost = os.Getenv("DB_HOST")
+	e.DBPort = os.Getenv("DB_PORT")
+	e.DBUser = os.Getenv("DB_USER")
+	e.DBPass = os.Getenv("DB_PASS")
+	e.DBName = os.Getenv("DB_NAME")
+
+	e.YaGptOauthToken = os.Getenv("YA_OAUTH")
+	e.YaGptDirectoryID = os.Getenv("YA_DIR_ID")
+	e.BotToken = os.Getenv("BOT_TOKEN")
 }
 
 var Module = fx.Options(
