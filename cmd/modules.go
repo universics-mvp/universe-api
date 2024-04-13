@@ -10,6 +10,7 @@ import (
 	challenge_domain "main/internal/domain/dailyChallenge"
 	challenge_answer_infrastructure "main/internal/infrastructure/challengeAnswer"
 	challenge_infrastructure "main/internal/infrastructure/dailyChallenge"
+	yandex_language_model "main/internal/infrastructure/yandexLanguageModel"
 	"main/pkg"
 
 	"go.uber.org/fx"
@@ -24,6 +25,8 @@ var CommonModules = fx.Options(
 	challenge_infrastructure.Module,
 	challenge_domain.Module,
 	challenge_application.Module,
+
+	yandex_language_model.Module,
 
 	challenge_answer_domain.Module,
 	challenge_answer_infrastructure.Module,
