@@ -24,3 +24,12 @@ func (c *ChallengeService) GetChallenges() ([]DailyChallenge, error) {
 
 	return result, nil
 }
+
+func (c *ChallengeService) CreateChallenge(challenge DailyChallenge) (*DailyChallenge, error) {
+	result, err := c.repositoty.CreateChallenge(challenge)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}

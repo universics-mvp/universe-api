@@ -7,7 +7,9 @@ import (
 	"main/pkg"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type ChallengeMongoRepository struct {
@@ -41,7 +43,27 @@ func (c ChallengeMongoRepository) GetChallenges() ([]challenge_domain.DailyChall
 	var challenges []challenge_domain.DailyChallenge
 
 	for _, challenge := range result {
-		challenges = append(challenges, *c.mapper.SchemaToEntity(challenge))
+		challenges = append(challenges, c.mapper.SchemaToEntity(challenge))
 	}
+
 	return challenges, nil
+}
+
+func (c ChallengeMongoRepository) CreateChallenge(challenge challenge_domain.DailyChallenge) (*challenge_domain.DailyChallenge, error) {
+	schema := c.mapper.EntityToSchema(challenge)
+	schema.ID = primitive.NewObjectID()
+
+	res, err := c.collection.InsertOne(context.Background(), schema, options.InsertOne().SetBypassDocumentValidation(true))
+	if err != nil {
+		return nil, err
+	}
+
+	id, err := primitive.ObjectIDFromHex(res.InsertedID.(primitive.ObjectID).Hex())
+	if err != nil {
+		return nil, err
+	}
+
+	challenge.ID = id
+
+	return &challenge, nil
 }

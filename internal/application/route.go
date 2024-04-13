@@ -1,10 +1,9 @@
 package route
 
 import (
+	"go.uber.org/fx"
 	challenge_application "main/internal/application/dailyChallenge"
 	question_controller "main/internal/application/question"
-
-	"go.uber.org/fx"
 )
 
 var Module = fx.Options(
@@ -13,12 +12,12 @@ var Module = fx.Options(
 
 type Routes []Route
 
-// Route interface
+// Route interface.
 type Route interface {
 	Setup()
 }
 
-// here should return routers
+// here should return routers.
 func NewRoutes(
 	questionRoutes question_controller.QuestionRoutes,
 	challengeRoutes challenge_application.ChallengeRoutes,

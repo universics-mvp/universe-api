@@ -8,7 +8,7 @@ func NewChallengeMapper() ChallengeMapper {
 	return ChallengeMapper{}
 }
 
-func (cm ChallengeMapper) EntityToSchema(challenge *challenge_domain.DailyChallenge) ChallengeSchema {
+func (cm ChallengeMapper) EntityToSchema(challenge challenge_domain.DailyChallenge) ChallengeSchema {
 	return ChallengeSchema{
 		ID:          challenge.ID,
 		Title:       challenge.Title,
@@ -18,8 +18,8 @@ func (cm ChallengeMapper) EntityToSchema(challenge *challenge_domain.DailyChalle
 	}
 }
 
-func (cm ChallengeMapper) SchemaToEntity(challenge ChallengeSchema) *challenge_domain.DailyChallenge {
-	return &challenge_domain.DailyChallenge{
+func (cm ChallengeMapper) SchemaToEntity(challenge ChallengeSchema) challenge_domain.DailyChallenge {
+	return challenge_domain.DailyChallenge{
 		ID:          challenge.ID,
 		Title:       challenge.Title,
 		Description: challenge.Description,
