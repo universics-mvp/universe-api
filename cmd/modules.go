@@ -4,13 +4,20 @@ import (
 	route "main/internal/application"
 	"main/internal/application/categorization"
 	challenge_answer_application "main/internal/application/challengeAnswer"
+	chatbot "main/internal/application/chat_bot"
 	challenge_application "main/internal/application/dailyChallenge"
 	question_controller "main/internal/application/question"
 	"main/internal/config"
 	challenge_answer_domain "main/internal/domain/challengeAnswer"
 	challenge_domain "main/internal/domain/dailyChallenge"
+	daily_reporter "main/internal/domain/dailyReporter"
+	"main/internal/domain/messaging"
 	challenge_answer_infrastructure "main/internal/infrastructure/challengeAnswer"
 	challenge_infrastructure "main/internal/infrastructure/dailyChallenge"
+	group_infrastructure "main/internal/infrastructure/group"
+	message_infrastructure "main/internal/infrastructure/message"
+	session_infrastructure "main/internal/infrastructure/session"
+	tgbot "main/internal/infrastructure/tgBot"
 	yandex_language_model "main/internal/infrastructure/yandexLanguageModel"
 	"main/pkg"
 
@@ -33,5 +40,12 @@ var CommonModules = fx.Options(
 	challenge_answer_infrastructure.Module,
 	challenge_answer_application.Module,
 
+	messaging.Module,
+	session_infrastructure.Module,
+	tgbot.Module,
+	chatbot.Module,
+	message_infrastructure.Module,
+	group_infrastructure.Module,
+	daily_reporter.Module,
 	categorization.Module,
 )

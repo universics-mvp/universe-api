@@ -1,5 +1,5 @@
 package categorization
 
 const (
-	categoriesTemperature = 0.01
+	categoriesTemperature = 0.1
 )
