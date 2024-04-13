@@ -9,9 +9,8 @@ import (
 )
 
 type Env struct {
-	AppEnv        string `mapstructure:"APP_ENV"`
-	ServerAddress string `mapstructure:"SERVER_HOST"`
-	Port          string `mapstructure:"PORT"`
+	AppEnv string `mapstructure:"APP_ENV"`
+	Port   string `mapstructure:"PORT"`
 
 	DBHost string `mapstructure:"DB_HOST"`
 	DBPort string `mapstructure:"DB_PORT"`
