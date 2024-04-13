@@ -20,6 +20,8 @@ type Env struct {
 	DBName string `mapstructure:"DB_NAME"`
 
 	ApiURL string `mapstructure:"API_URL"`
+
+	BotToken string `mapstructure:"BOT_TOKEN"`
 }
 
 func NewEnv() Env {
