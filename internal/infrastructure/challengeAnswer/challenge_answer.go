@@ -11,6 +11,7 @@ type answerSchema struct {
 	UserId      string             `bson:"user_id"`
 	Answer      string             `bson:"answer"`
 	Mark        int                `bson:"mark"`
+	Status      string             `bson:"status"`
 }
 
 var Module = fx.Options(

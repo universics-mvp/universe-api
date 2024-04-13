@@ -10,12 +10,20 @@ type ChallengeAnswer struct {
 	ChallengeId primitive.ObjectID `json:"challenge_id" binding:"required"`
 	UserId      string             `json:"user_id"      binding:"required"`
 	Answer      string             `json:"answer"       binding:"required"`
+	Mark        int                `json:"mark"`
+	Status      string             `json:"status"`
 }
 
 type ChallengeAnswerRepository interface {
 	GetChallengeAnswers(id primitive.ObjectID) ([]ChallengeAnswer, error)
 	CreateChallengeAnswer(challengeAnswer ChallengeAnswer) (*ChallengeAnswer, error)
 }
+
+const (
+	StatusAccepted = "accepted"
+	StatusRejected = "rejected"
+	StatusPending  = "pending"
+)
 
 var Module = fx.Options(
 	fx.Provide(NewChallengeAnswerService),

@@ -15,5 +15,9 @@ func (s ChallengeAnswerService) GetChallengeAnswers(id primitive.ObjectID) ([]Ch
 }
 
 func (s ChallengeAnswerService) CreateChallengeAnswer(challengeAnswer ChallengeAnswer) (*ChallengeAnswer, error) {
+	if challengeAnswer.Status == "" {
+		challengeAnswer.Status = StatusPending
+	}
+
 	return s.repo.CreateChallengeAnswer(challengeAnswer)
 }
