@@ -33,7 +33,14 @@ func (l LanguageModel) getIamToken() (string, error) {
 		return "error", err
 	}
 
-	return resp.String(), nil
+	var data IamTokenDTO
+
+	err = json.Unmarshal(resp.Body(), &data)
+	if err != nil {
+		return "error", err
+	}
+
+	return data.IamToken, nil
 }
 
 func (l LanguageModel) GetAnswer(msg string, promt string, temperture float32) (string, error) {
@@ -61,18 +68,23 @@ func (l LanguageModel) GetAnswer(msg string, promt string, temperture float32) (
 
 	decodedJSON := resp.Body()
 
-	var data interface {
+	var data struct {
+		Result struct {
+			Alternatives []struct {
+				Message struct {
+					Role string `json:"role"`
+					Text string `json:"text"`
+				} `json:"message"`
+			} `json:"alternatives"`
+		} `json:"result"`
 	}
 
-	err = json.Unmarshal(decodedJSON, &data)
-	if err != nil {
+	if err := json.Unmarshal(decodedJSON, &data); err != nil {
 		return "error", err
 	}
 
-	jsonData, err := json.Marshal(data)
-	if err != nil {
-		return "error", err
-	}
+	alternatives := data.Result.Alternatives
+	assistantText := alternatives[0].Message.Text
 
-	return string(jsonData), nil
+	return assistantText, nil
 }
