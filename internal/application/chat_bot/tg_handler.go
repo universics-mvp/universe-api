@@ -29,11 +29,16 @@ func (handler TgHandler) Run() {
 }
 
 func (handler TgHandler) handleMessage(msg telebot.Message) {
+	handler.logger.Debugf("%s: %s", msg.Sender.Username, msg.Text)
 	if msg.Chat.Type == telebot.ChatGroup {
 		err := handler.chatService.HandleChatMessage(msg)
-		handler.logger.Error(err)
+		if err != nil {
+			handler.logger.Error(err)
+		}
 		return
 	}
 	err := handler.imService.HandleMessage(msg)
-	handler.logger.Error(err)
+	if err != nil {
+		handler.logger.Error(err)
+	}
 }

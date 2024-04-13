@@ -31,6 +31,9 @@ func (svc IMService) HandleMessage(receivedMessage telebot.Message) error {
 	}
 	message := message.FromTGMessage(receivedMessage, *chatSession.ID)
 	_, err = svc.msgRepo.Save(&message)
-	svc.bot.SendMessage(receivedMessage.Chat.ID, receivedMessage.Text)
+	if err != nil {
+		return err
+	}
+	err = svc.bot.SendMessage(receivedMessage.Chat.ID, receivedMessage.Text)
 	return err
 }
