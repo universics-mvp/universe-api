@@ -91,3 +91,44 @@ func (c ChallengeAnswerMongoRepository) UpdateChallengeAnswer(challengeAnswer do
 
 	return &challengeAnswer, nil
 }
+
+func (c ChallengeAnswerMongoRepository) GetChallengeAnswersByUserId(userId string) ([]domain.ChallengeAnswer, error) {
+	cur, err := c.collection.Find(context.Background(), bson.M{"user_id": userId})
+	if err != nil {
+		return nil, err
+	}
+	defer cur.Close(context.Background())
+
+	var result []answerSchema
+
+	err = cur.All(context.Background(), &result)
+	if err != nil {
+		return nil, err
+	}
+
+	var challengeAnswers []domain.ChallengeAnswer
+
+	for _, challengeAnswer := range result {
+		challengeAnswers = append(challengeAnswers, c.mapper.SchemaToEntity(challengeAnswer))
+	}
+
+	return challengeAnswers, nil
+}
+
+func (c ChallengeAnswerMongoRepository) FindChallengeAnswerByChallengeIdAndUserId(
+	challengeId primitive.ObjectID, userId string,
+) (*domain.ChallengeAnswer, error) {
+	var schema answerSchema
+
+	err := c.collection.FindOne(
+		context.Background(),
+		bson.M{"challenge_id": challengeId, "user_id": userId},
+	).Decode(&schema)
+	if err != nil {
+		return nil, err
+	}
+
+	resp := c.mapper.SchemaToEntity(schema)
+
+	return &resp, nil
+}

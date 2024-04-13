@@ -20,6 +20,8 @@ type ChallengeAnswerRepository interface {
 	CreateChallengeAnswer(challengeAnswer ChallengeAnswer) (*ChallengeAnswer, error)
 	UpdateChallengeAnswer(challengeAnswer ChallengeAnswer) (*ChallengeAnswer, error)
 	FindChallengeAnswer(id primitive.ObjectID) (*ChallengeAnswer, error)
+	GetChallengeAnswersByUserId(userId string) ([]ChallengeAnswer, error)
+	FindChallengeAnswerByChallengeIdAndUserId(challengeId primitive.ObjectID, userId string) (*ChallengeAnswer, error)
 }
 
 const (

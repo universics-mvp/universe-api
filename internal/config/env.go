@@ -21,7 +21,9 @@ type Env struct {
 
 	ApiURL string `mapstructure:"API_URL"`
 
-	BotToken string `mapstructure:"BOT_TOKEN"`
+	BotToken         string `mapstructure:"BOT_TOKEN"`
+	YaGptOauthToken  string `mapstructure:"YA_OAUTH"`
+	YaGptDirectoryID string `mapstructure:"YA_DIR_ID"`
 }
 
 func NewEnv() Env {

@@ -19,11 +19,18 @@ func (s ChallengeAnswerService) GetChallengeAnswers(id primitive.ObjectID) ([]Ch
 }
 
 func (s ChallengeAnswerService) CreateChallengeAnswer(challengeAnswer ChallengeAnswer) (*ChallengeAnswer, error) {
-	if challengeAnswer.Status == "" {
-		challengeAnswer.Status = StatusPending
+	_, err := s.repo.FindChallengeAnswerByChallengeIdAndUserId(challengeAnswer.ChallengeId, challengeAnswer.UserId)
+	if err == nil {
+		return nil, errors.New("you have already answered this challenge")
 	}
 
+	challengeAnswer.Status = StatusPending
+
 	return s.repo.CreateChallengeAnswer(challengeAnswer)
+}
+
+func (s ChallengeAnswerService) GetChallengeAnswersByUserId(userId string) ([]ChallengeAnswer, error) {
+	return s.repo.GetChallengeAnswersByUserId(userId)
 }
 
 func (s ChallengeAnswerService) UpdateChallengeAnswerStatus(id primitive.ObjectID, status string, mark *int, comment *string) (*ChallengeAnswer, error) {

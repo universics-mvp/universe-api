@@ -16,6 +16,7 @@ import (
 	message_infrastructure "main/internal/infrastructure/message"
 	session_infrastructure "main/internal/infrastructure/session"
 	tgbot "main/internal/infrastructure/tgBot"
+	yandex_language_model "main/internal/infrastructure/yandexLanguageModel"
 	"main/pkg"
 
 	"go.uber.org/fx"
@@ -30,6 +31,8 @@ var CommonModules = fx.Options(
 	challenge_infrastructure.Module,
 	challenge_domain.Module,
 	challenge_application.Module,
+
+	yandex_language_model.Module,
 
 	challenge_answer_domain.Module,
 	challenge_answer_infrastructure.Module,
