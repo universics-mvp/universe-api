@@ -31,17 +31,12 @@ func (repo MessageRepository) Save(message *message.Message) (*message.Message, 
 }
 
 func (repo MessageRepository) create(message *message.Message) (*message.Message, error) {
-	res, err := repo.collection.InsertOne(context.Background(), mapToSchema(*message))
+	newId := primitive.NewObjectID()
+	message.ID = &newId
+	_, err := repo.collection.InsertOne(context.Background(), mapToSchema(*message))
 	if err != nil {
 		return nil, err
 	}
-
-	id, err := primitive.ObjectIDFromHex(res.InsertedID.(primitive.ObjectID).Hex())
-	if err != nil {
-		return nil, err
-	}
-
-	message.ID = &id
 
 	return message, nil
 }

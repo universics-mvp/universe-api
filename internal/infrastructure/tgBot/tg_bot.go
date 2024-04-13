@@ -3,6 +3,7 @@ package tgbot
 import (
 	"log"
 	"main/internal/config"
+	"main/internal/domain/messaging"
 	"main/pkg"
 	"time"
 
@@ -12,11 +13,26 @@ import (
 type TGBot struct {
 	logger          pkg.Logger
 	messageHandlers []func(newMessage telebot.Message)
-	bot             telebot.Bot
+	bot             *telebot.Bot
 }
 
-func (bot TGBot) SendMessage(chatId int64, message string) {
-	bot.bot.Send(bot.bot.ChatByID(chatId))
+func (bot TGBot) Run() {
+	bot.bot.Handle(telebot.OnText, bot.HandleNextMessage)
+	bot.bot.Handle("/start", func(ctx telebot.Context) error {
+		err := ctx.Reply("Hello")
+		return err
+	})
+
+	go bot.bot.Start()
+}
+
+func (bot TGBot) SendMessage(chatId int64, message string) error {
+	chat, err := bot.bot.ChatByID(chatId)
+	if err != nil {
+		return err
+	}
+	_, err = bot.bot.Send(chat, message)
+	return err
 }
 
 func (bot *TGBot) AddMessageHandler(handler func(newMessage telebot.Message)) {
@@ -30,7 +46,7 @@ func (bot TGBot) HandleNextMessage(c telebot.Context) error {
 	return nil
 }
 
-func NewTGBot(env config.Env, logger pkg.Logger) TGBot {
+func NewTGBot(env config.Env, logger pkg.Logger) messaging.TGBot {
 	pref := telebot.Settings{
 		Token:  env.BotToken,
 		Poller: &telebot.LongPoller{Timeout: 10 * time.Second},
@@ -41,13 +57,9 @@ func NewTGBot(env config.Env, logger pkg.Logger) TGBot {
 		log.Fatal(err)
 		panic(err)
 	}
-	instance := TGBot{
+	return &TGBot{
 		logger:          logger,
 		messageHandlers: make([]func(newMessage telebot.Message), 0),
+		bot:             b,
 	}
-
-	b.Handle(telebot.OnText, instance.HandleNextMessage)
-
-	b.Start()
-	return instance
 }

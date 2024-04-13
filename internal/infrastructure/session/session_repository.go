@@ -31,17 +31,12 @@ func (repo SessionRepository) Save(session *session.Session) (*session.Session, 
 }
 
 func (repo SessionRepository) create(session *session.Session) (*session.Session, error) {
-	res, err := repo.collection.InsertOne(context.Background(), mapToSchema(*session))
+	newId := primitive.NewObjectID()
+	session.ID = &newId
+	_, err := repo.collection.InsertOne(context.Background(), mapToSchema(*session))
 	if err != nil {
 		return nil, err
 	}
-
-	id, err := primitive.ObjectIDFromHex(res.InsertedID.(primitive.ObjectID).Hex())
-	if err != nil {
-		return nil, err
-	}
-
-	session.ID = &id
 
 	return session, nil
 }
@@ -57,7 +52,7 @@ func (repo SessionRepository) update(sess *session.Session) (*session.Session, e
 
 func (c SessionRepository) GetByChatId(chatId int64) (*session.Session, error) {
 	var schema SessionSchema
-	err := c.collection.FindOne(context.Background(), bson.M{"chat_id": chatId}).Decode(schema)
+	err := c.collection.FindOne(context.Background(), bson.M{"chat_id": chatId}).Decode(&schema)
 	if err != nil {
 		return nil, err
 	}

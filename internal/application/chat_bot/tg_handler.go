@@ -2,7 +2,6 @@ package chatbot
 
 import (
 	"main/internal/domain/messaging"
-	tg_bot "main/internal/infrastructure/tgBot"
 	"main/pkg"
 
 	"gopkg.in/telebot.v3"
@@ -12,15 +11,21 @@ type TgHandler struct {
 	imService   messaging.IMService
 	chatService messaging.ChatService
 	logger      pkg.Logger
+	bot         messaging.TGBot
 }
 
-func NewTGHandler(service messaging.IMService, chatService messaging.ChatService, tgBot tg_bot.TGBot) TgHandler {
-	handler := TgHandler{
+func NewTGHandler(service messaging.IMService, chatService messaging.ChatService, tgBot messaging.TGBot, logger pkg.Logger) TgHandler {
+	return TgHandler{
 		imService:   service,
 		chatService: chatService,
+		bot:         tgBot,
+		logger:      logger,
 	}
-	tgBot.AddMessageHandler(handler.handleMessage)
-	return handler
+}
+
+func (handler TgHandler) Run() {
+	go handler.bot.Run()
+	handler.bot.AddMessageHandler(handler.handleMessage)
 }
 
 func (handler TgHandler) handleMessage(msg telebot.Message) {

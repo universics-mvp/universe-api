@@ -15,7 +15,7 @@ func NewSessionService(repo SessionRepository, logger pkg.Logger) SessionService
 
 func (svc SessionService) GetOrCreateSessionForChat(chatId int64) (*Session, error) {
 	session, err := svc.repo.GetByChatId(chatId)
-	if err != nil {
+	if err != nil && err.Error() != "mongo: no documents in result" {
 		svc.logger.Error(err)
 		return nil, err
 	}

@@ -3,6 +3,7 @@ package cmd
 import (
 	"context"
 	route "main/internal/application"
+	chatbot "main/internal/application/chat_bot"
 	"main/internal/config"
 	"main/pkg"
 
@@ -10,29 +11,28 @@ import (
 	"go.uber.org/fx/fxevent"
 )
 
-
 func Run() any {
 	return func(
 		route route.Routes,
 		handler pkg.RequestHandler,
+		tgHandler chatbot.TgHandler,
 		env config.Env,
 		logger pkg.Logger,
 	) {
 		route.Setup()
-		
+		tgHandler.Run()
 		err := handler.Gin.Run(":" + env.Port)
 		if err != nil {
 			logger.Error(err)
-			return 
+			return
 		}
 	}
 }
 
-
 func StartApp() error {
 	logger := pkg.GetLogger(config.NewEnv())
 	opts := fx.Options(
-		fx.WithLogger(func () fxevent.Logger  {
+		fx.WithLogger(func() fxevent.Logger {
 			return logger.GetFxLogger()
 		}),
 		fx.Invoke(Run()),

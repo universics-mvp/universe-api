@@ -12,6 +12,7 @@ import (
 	"main/internal/domain/messaging"
 	challenge_answer_infrastructure "main/internal/infrastructure/challengeAnswer"
 	challenge_infrastructure "main/internal/infrastructure/dailyChallenge"
+	message_infrastructure "main/internal/infrastructure/message"
 	session_infrastructure "main/internal/infrastructure/session"
 	tgbot "main/internal/infrastructure/tgBot"
 	"main/pkg"
@@ -37,4 +38,5 @@ var CommonModules = fx.Options(
 	session_infrastructure.Module,
 	tgbot.Module,
 	chatbot.Module,
+	message_infrastructure.Module,
 )
