@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"main/docs"
 	route "main/internal/application"
 	"main/internal/application/categorization"
 	challenge_answer_application "main/internal/application/challengeAnswer"
@@ -48,4 +49,6 @@ var CommonModules = fx.Options(
 	group_infrastructure.Module,
 	daily_reporter.Module,
 	categorization.Module,
+
+	docs.Module,
 )

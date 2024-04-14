@@ -1,0 +1,264 @@
+definitions:
+  challenge_answer_application.UpdateAnswerStatusDTO:
+    properties:
+      comment:
+        type: string
+      mark:
+        type: integer
+      status:
+        enum:
+        - accepted
+        - rejected
+        type: string
+    required:
+    - mark
+    - status
+    type: object
+  challenge_answer_domain.ChallengeAnswer:
+    properties:
+      answer:
+        type: string
+      challenge_id:
+        type: string
+      comment:
+        type: string
+      id:
+        type: string
+      mark:
+        type: integer
+      status:
+        type: string
+      user_id:
+        type: string
+    required:
+    - answer
+    - challenge_id
+    - user_id
+    type: object
+  challenge_application.GetVariantsMessage:
+    properties:
+      message:
+        type: string
+    type: object
+  challenge_domain.DailyChallenge:
+    properties:
+      creator_id:
+        type: string
+      description:
+        type: string
+      groups:
+        items:
+          type: string
+        type: array
+      id:
+        type: string
+      title:
+        type: string
+    required:
+    - creator_id
+    - description
+    - title
+    type: object
+  question_controller.QuestionDTO:
+    properties:
+      user_message:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/challenge/:challenge_id/answers:
+    get:
+      consumes:
+      - application/json
+      description: get
+      parameters:
+      - description: role
+        in: header
+        name: string
+        required: true
+        type: string
+      - description: challenge_id
+        in: path
+        name: challenge_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/challenge_answer_domain.ChallengeAnswer'
+            type: array
+      summary: Get challenge answers
+      tags:
+      - ChallengeAnswer
+  /api/v1/challenge_answers:
+    get:
+      consumes:
+      - application/json
+      description: get user answers
+      parameters:
+      - description: user_id
+        in: header
+        name: string
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/challenge_answer_domain.ChallengeAnswer'
+            type: array
+      summary: Get user answers
+      tags:
+      - ChallengeAnswer
+    post:
+      consumes:
+      - application/json
+      description: answer to challenge
+      parameters:
+      - description: role
+        in: header
+        name: string
+        required: true
+        type: string
+      - description: challengeAnswer
+        in: body
+        name: challengeAnswer
+        required: true
+        schema:
+          $ref: '#/definitions/challenge_answer_domain.ChallengeAnswer'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/challenge_answer_domain.ChallengeAnswer'
+      summary: Answer to challenge
+      tags:
+      - ChallengeAnswer
+  /api/v1/challenge_answers/{id}:
+    put:
+      consumes:
+      - application/json
+      description: update challenge answer status
+      parameters:
+      - description: role
+        in: header
+        name: string
+        required: true
+        type: string
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: UpdateAnswerStatusDTO
+        in: body
+        name: UpdateAnswerStatusDTO
+        required: true
+        schema:
+          $ref: '#/definitions/challenge_answer_application.UpdateAnswerStatusDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/challenge_answer_domain.ChallengeAnswer'
+      summary: Update challenge answer status
+      tags:
+      - ChallengeAnswer
+  /api/v1/challenges:
+    get:
+      consumes:
+      - application/json
+      description: get
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/challenge_domain.DailyChallenge'
+            type: array
+      summary: Get challenges
+      tags:
+      - Challenge
+    post:
+      consumes:
+      - application/json
+      description: create
+      parameters:
+      - description: role
+        in: header
+        name: string
+        required: true
+        type: string
+      - description: challenge
+        in: body
+        name: challenge
+        required: true
+        schema:
+          $ref: '#/definitions/challenge_domain.DailyChallenge'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/challenge_domain.DailyChallenge'
+      summary: Create challenge
+      tags:
+      - Challenge
+  /api/v1/challenges/variants:
+    post:
+      consumes:
+      - application/json
+      description: get variants for challenge
+      parameters:
+      - description: message
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/challenge_application.GetVariantsMessage'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Get variants for challenge
+      tags:
+      - Challenge
+  /api/v1/question:
+    post:
+      consumes:
+      - application/json
+      description: ask
+      parameters:
+      - description: question
+        in: body
+        name: question
+        required: true
+        schema:
+          $ref: '#/definitions/question_controller.QuestionDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Ask question
+      tags:
+      - Question
+swagger: "2.0"

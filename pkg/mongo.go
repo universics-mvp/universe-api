@@ -3,9 +3,11 @@ package pkg
 import (
 	"context"
 	"fmt"
+
+	"main/internal/config"
+
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"main/internal/config"
 )
 
 type MongoClient struct {

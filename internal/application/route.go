@@ -1,6 +1,7 @@
 package route
 
 import (
+	"main/docs"
 	challenge_answer_application "main/internal/application/challengeAnswer"
 	challenge_application "main/internal/application/dailyChallenge"
 	question_controller "main/internal/application/question"
@@ -24,11 +25,13 @@ func NewRoutes(
 	questionRoutes question_controller.QuestionRoutes,
 	challengeRoutes challenge_application.ChallengeRoutes,
 	challengeAnswerRoutes challenge_answer_application.ChallengeAnswerRoutes,
+	docRoutes docs.SwaggerRoutes,
 ) Routes {
 	return Routes{
 		questionRoutes,
 		challengeRoutes,
 		challengeAnswerRoutes,
+		docRoutes,
 	}
 }
 

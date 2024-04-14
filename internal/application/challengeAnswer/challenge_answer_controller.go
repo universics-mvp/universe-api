@@ -21,6 +21,15 @@ func NewChallengeAnswerController(service challenge_answer_domain.ChallengeAnswe
 	return ChallengeAnswerController{service: service, logger: logger, roleValidator: pkg.RoleValidator{}}
 }
 
+// @Summary Get challenge answers
+// @Tags ChallengeAnswer
+// @Description get
+// @Accept json
+// @Produce json
+// @Param string header string true "role"
+// @Param challenge_id path string true "challenge_id"
+// @Router /api/v1/challenge/:challenge_id/answers [get]
+// @Success 200 {array} challenge_answer_domain.ChallengeAnswer
 func (controller ChallengeAnswerController) GetChallengeAnswers(ctx *gin.Context) {
 	ok := controller.roleValidator.Validate(ctx.GetHeader("role"), application_common.CuratorRole)
 	if !ok {
@@ -42,6 +51,14 @@ func (controller ChallengeAnswerController) GetChallengeAnswers(ctx *gin.Context
 	ctx.JSON(http.StatusOK, challengeAnswers)
 }
 
+// @Summary Get user answers
+// @Tags ChallengeAnswer
+// @Description get user answers
+// @Accept json
+// @Produce json
+// @Param string header string true "user_id"
+// @Router /api/v1/challenge_answers [get]
+// @Success 200 {array} challenge_answer_domain.ChallengeAnswer
 func (controller ChallengeAnswerController) GetUserAnswers(ctx *gin.Context) {
 	userId := ctx.GetHeader("user_id")
 
@@ -56,6 +73,15 @@ func (controller ChallengeAnswerController) GetUserAnswers(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, challengeAnswers)
 }
 
+// @Summary Answer to challenge
+// @Tags ChallengeAnswer
+// @Description answer to challenge
+// @Accept json
+// @Produce json
+// @Param string header string true "role"
+// @Param challengeAnswer body challenge_answer_domain.ChallengeAnswer true "challengeAnswer"
+// @Router /api/v1/challenge_answers [post]
+// @Success 201 {object} challenge_answer_domain.ChallengeAnswer
 func (controller ChallengeAnswerController) AnswerToChallenge(ctx *gin.Context) {
 	var challengeAnswer challenge_answer_domain.ChallengeAnswer
 	if err := ctx.ShouldBindJSON(&challengeAnswer); err != nil {
@@ -76,6 +102,16 @@ func (controller ChallengeAnswerController) AnswerToChallenge(ctx *gin.Context) 
 	ctx.JSON(http.StatusCreated, createdChallengeAnswer)
 }
 
+// @Summary Update challenge answer status
+// @Tags ChallengeAnswer
+// @Description update challenge answer status
+// @Accept json
+// @Produce json
+// @Param string header string true "role"
+// @Param id path string true "id"
+// @Param UpdateAnswerStatusDTO body UpdateAnswerStatusDTO true "UpdateAnswerStatusDTO"
+// @Router /api/v1/challenge_answers/{id} [put]
+// @Success 200 {object} challenge_answer_domain.ChallengeAnswer
 func (controller ChallengeAnswerController) UpdateChallengeAnswerStatus(ctx *gin.Context) {
 	ok := controller.roleValidator.Validate(ctx.GetHeader("role"), application_common.CuratorRole)
 	if !ok {

@@ -1,0 +1,401 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/api/v1/challenge/:challenge_id/answers": {
+            "get": {
+                "description": "get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ChallengeAnswer"
+                ],
+                "summary": "Get challenge answers",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "role",
+                        "name": "string",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "challenge_id",
+                        "name": "challenge_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/challenge_answer_domain.ChallengeAnswer"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/challenge_answers": {
+            "get": {
+                "description": "get user answers",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ChallengeAnswer"
+                ],
+                "summary": "Get user answers",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user_id",
+                        "name": "string",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/challenge_answer_domain.ChallengeAnswer"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "answer to challenge",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ChallengeAnswer"
+                ],
+                "summary": "Answer to challenge",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "role",
+                        "name": "string",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "challengeAnswer",
+                        "name": "challengeAnswer",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/challenge_answer_domain.ChallengeAnswer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/challenge_answer_domain.ChallengeAnswer"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/challenge_answers/{id}": {
+            "put": {
+                "description": "update challenge answer status",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ChallengeAnswer"
+                ],
+                "summary": "Update challenge answer status",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "role",
+                        "name": "string",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "UpdateAnswerStatusDTO",
+                        "name": "UpdateAnswerStatusDTO",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/challenge_answer_application.UpdateAnswerStatusDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/challenge_answer_domain.ChallengeAnswer"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/challenges": {
+            "get": {
+                "description": "get",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Challenge"
+                ],
+                "summary": "Get challenges",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/challenge_domain.DailyChallenge"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "create",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Challenge"
+                ],
+                "summary": "Create challenge",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "role",
+                        "name": "string",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "challenge",
+                        "name": "challenge",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/challenge_domain.DailyChallenge"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/challenge_domain.DailyChallenge"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/challenges/variants": {
+            "post": {
+                "description": "get variants for challenge",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Challenge"
+                ],
+                "summary": "Get variants for challenge",
+                "parameters": [
+                    {
+                        "description": "message",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/challenge_application.GetVariantsMessage"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/v1/question": {
+            "post": {
+                "description": "ask",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Question"
+                ],
+                "summary": "Ask question",
+                "parameters": [
+                    {
+                        "description": "question",
+                        "name": "question",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/question_controller.QuestionDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "challenge_answer_application.UpdateAnswerStatusDTO": {
+            "type": "object",
+            "required": [
+                "mark",
+                "status"
+            ],
+            "properties": {
+                "comment": {
+                    "type": "string"
+                },
+                "mark": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "accepted",
+                        "rejected"
+                    ]
+                }
+            }
+        },
+        "challenge_answer_domain.ChallengeAnswer": {
+            "type": "object",
+            "required": [
+                "answer",
+                "challenge_id",
+                "user_id"
+            ],
+            "properties": {
+                "answer": {
+                    "type": "string"
+                },
+                "challenge_id": {
+                    "type": "string"
+                },
+                "comment": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "mark": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "challenge_application.GetVariantsMessage": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "challenge_domain.DailyChallenge": {
+            "type": "object",
+            "required": [
+                "creator_id",
+                "description",
+                "title"
+            ],
+            "properties": {
+                "creator_id": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "groups": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "id": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "question_controller.QuestionDTO": {
+            "type": "object",
+            "properties": {
+                "user_message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

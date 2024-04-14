@@ -18,6 +18,14 @@ func NewQuestionController(categorizer categorization.Categorizer) QuestionContr
 	}
 }
 
+// @Summary Ask question
+// @Tags Question
+// @Description ask
+// @Accept json
+// @Produce json
+// @Param question body QuestionDTO true "question"
+// @Router /api/v1/question [post]
+// @Success 200 {string} string
 func (controller QuestionController) AskQuestion(c *gin.Context) {
 	var dto *QuestionDTO
 
